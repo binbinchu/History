@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <style>
+        li{
+            list-style: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<ul id="choMenu" class="rel cho_menu">
+    <li><a href="ajax.php?area=pudong" class="cho_link cho_link_on" data-name="peter">浦东区<span class="ml20">8</span></a></li>
+    <li><a href="ajax.php?area=baoshan" class="cho_link" data-name="ray">宝山区<span class="ml20">7</span></a></li>
+    <li><a href="ajax.php?area=jiading" class="cho_link" data-name="egon">嘉定区<span class="ml20">8</span></a></li>
+    <li><a href="ajax.php?area=qingpu" class="cho_link" data-name="winston">青浦区<span class="ml20">3</span></a></li>
+    <li><a href="ajax.php?area=minhang" class="cho_link">闵行区<span class="ml20">4</span></a></li>
+    <li><a href="ajax.php?area=putuo" class="cho_link">普陀区<span class="ml20">2</span></a></li>
+    <li><a href="ajax.php?area=jinshan" class="cho_link">金山区<span class="ml20">3</span></a></li>
+    <li><a href="ajax.php?area=songjiang" class="cho_link">松江区<span class="ml20">3</span></a></li>
+    <li><a href="ajax.php?area=zhabei" class="cho_link">闸北区<span class="ml20">1</span></a></li>
+    <li><a href="ajax.php?area=fengxian" class="cho_link">奉贤区<span class="ml20">5</span></a></li>
+    <li><a href="ajax.php?area=huangpu" class="cho_link">黄浦区<span class="ml20">1</span></a></li>
+    <li><a href="ajax.php?area=changning" class="cho_link">长宁区<span class="ml20">1</span></a></li>
+    <li><a href="ajax.php?area=jingan" class="cho_link">静安区<span class="ml20">1</span></a></li>
+    <li><a href="ajax.php?area=zhoubian" class="cho_link">上海周边<span class="ml20">1</span></a></li>
+</ul>
+<div class="content"></div>
+<script>
+    function stopDefault( e ) {
+        if ( e && e.preventDefault )
+            e.preventDefault();
+        else
+            window.event.returnValue = false;
+
+        return false;
+    }
+    $("#choMenu a").bind("click", function(event) {
+        stopDefault(event);
+        var query = this.href.split("?")[1];
+        console.log(location.href.split("?")[0] + "?" + query);
+        if(history.pushState){
+            var url = $(this).attr("data-name");
+            console.log(url);
+            $(".content").load(url+".html");
+            var title = "上海3月开盘项目汇总-"+$(this).text().replace(/\d+$/, "");
+            document.title = title;
+            if(event&&/\d/.test(event.button)){
+                history.pushState({ title: title }, title, location.href.split("?")[0] + "?" + query);
+            }
+        }
+    });
+    var HashTrigger = function(target){
+        var query = location.href.split("?")[1],
+            eleTarget = target||null;
+        
+    }
+</script>
+</body>
+</html>
